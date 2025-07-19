@@ -4,7 +4,7 @@ public class Main {
 
         System.out.println("===  PARTIDA COMPLETA ===");
         Game game = Game.getInstance();
-        game.setDificuldade(Dificuldade.FACIL);
+        game.setDificuldade(Dificuldade.DIFICIL);
 
         try {
             game.iniciarJogo();
