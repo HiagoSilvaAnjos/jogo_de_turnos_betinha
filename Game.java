@@ -87,7 +87,7 @@ public class Game {
             case 1: return new Mago("Mago Aleatório");
             case 2: return new Arqueiro("Arqueiro Aleatório");
             case 3: return new Furtivo("Furtivo Aleatório");
-            case 4: return new Orc(Dificuldade.MEDIO);
+            case 4: return new Ogro(Dificuldade.MEDIO);
             case 5: return new Goblin(Dificuldade.MEDIO);
             case 6: return new Dragao(Dificuldade.MEDIO);
             default: return new Guerreiro("Padrão");
@@ -99,7 +99,7 @@ public class Game {
         switch (tipo) {
             case 1: return new Goblin(dificuldade);
             case 2: return new Dragao(dificuldade);
-            default: return new Orc(dificuldade);
+            default: return new Ogro(dificuldade);
         }
     }
 
