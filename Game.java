@@ -36,7 +36,7 @@ public class Game {
 
         int numMonstros = 2 + dificuldade.ordinal();
         for (int i = 0; i < numMonstros; i++) {
-            monstros.add(gerarMonstroAleatorio());
+            monstros.add(gerarMonstroAleatorio(i));
         }
 
         log.registrar("=== INÍCIO DO JOGO ===");
@@ -67,8 +67,8 @@ public class Game {
             log.registrar("\n--- TURNO " + turnoAtual + " ---");
 
             List<Player> jogadores = new ArrayList<>();
-            jogadores.addAll(herois.stream().filter(Player::estaVivo).collect(Collectors.toList()));
-            jogadores.addAll(monstros.stream().filter(Player::estaVivo).collect(Collectors.toList()));
+            jogadores.addAll(herois.stream().filter(Player::estaVivo).toList());
+            jogadores.addAll(monstros.stream().filter(Player::estaVivo).toList());
 
             turno.executar(jogadores);
             turnoAtual++;
@@ -80,26 +80,27 @@ public class Game {
         }
     }
 
-    public Player gerarPlayerAleatoria() {
-        int tipo = (int) (Math.random() * 7);
-        switch (tipo) {
-            case 0: return new Guerreiro("Guerreiro Aleatório");
-            case 1: return new Mago("Mago Aleatório");
-            case 2: return new Arqueiro("Arqueiro Aleatório");
-            case 3: return new Furtivo("Furtivo Aleatório");
-            case 4: return new Ogro(Dificuldade.MEDIO);
-            case 5: return new Goblin(Dificuldade.MEDIO);
-            case 6: return new Dragao(Dificuldade.MEDIO);
-            default: return new Guerreiro("Padrão");
-        }
-    }
+//    public Player gerarPlayerAleatoria() {
+//        int tipo = (int) (Math.random() * 7);
+//        switch (tipo) {
+//            case 0: return new Guerreiro("Guerreiro Aleatório");
+//            case 1: return new Mago("Mago Aleatório");
+//            case 2: return new Arqueiro("Arqueiro Aleatório");
+//            case 3: return new Furtivo("Furtivo Aleatório");
+//            case 4: return new Ogro(Dificuldade.MEDIO);
+//            case 5: return new Goblin(Dificuldade.MEDIO);
+//            case 6: return new Dragao(Dificuldade.MEDIO);
+//            default: return new Guerreiro("Padrão");
+//        }
+//    }
 
-    private Monstro gerarMonstroAleatorio() {
+    private Monstro gerarMonstroAleatorio(int indice) {
         int tipo = (int) (Math.random() * 3);
+        String sufixo = " #" + (indice + 1);
         switch (tipo) {
-            case 1: return new Goblin(dificuldade);
-            case 2: return new Dragao(dificuldade);
-            default: return new Ogro(dificuldade);
+            case 1: return new Goblin(dificuldade, "Goblin" + sufixo);
+            case 2: return new Dragao(dificuldade, "Dragão" + sufixo);
+            default: return new Ogro(dificuldade, "Ogro" + sufixo);
         }
     }
 

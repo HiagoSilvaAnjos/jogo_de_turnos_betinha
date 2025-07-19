@@ -42,16 +42,10 @@ public abstract class Heroi extends Player {
         // Se a mesma rolagem que definiu o acerto for menor ou igual à chance crítica,
         // considera-se um acerto crítico. Isso reaproveita o valor `roll`, dando a sensação
         // de que um número baixo é “melhor” para o atacante (baixa rolagem = mais sorte).
+
+        // Se for um ataque crítico, mata o alvo instantaneamente.
         if (roll <= chanceCritico) {
-            // O dano crítico é o dobro da força de ataque, menos a defesa do alvo.
-            // Isso representa um golpe mais poderoso, que ignora parcialmente a resistência do oponente.
-            double danoCritico = forcaAtaque * 2 - alvo.getDefesa();
-
-            // Protege contra dano negativo: se a defesa for muito alta, ainda assim causa pelo menos 1 de dano.
-            // Também impede que o HP do alvo fique abaixo de 0.
-            alvo.setHP(Math.max(0, alvo.getHP() - Math.max(1, danoCritico)));
-
-            // Retorna o resultado do ataque como CRÍTICO.
+            alvo.setHP(0); // Insta kill
             return ResultadoAtaque.CRITICO;
         }
 

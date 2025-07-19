@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Turno {
     public void executar(List<Player> jogadores) {
+        // Ordena todos os jogadores vivos pela velocidade (maior primeiro)
         jogadores.sort(Comparator.comparingInt(Player::getVelocidade).reversed());
 
         for (Player jogador : jogadores) {
@@ -21,8 +22,16 @@ public class Turno {
         for (Player jogador : jogadores) {
             if (jogador instanceof Monstro && jogador.estaVivo()) {
                 ResultadoAtaque resultado = heroi.realizarAtaque(jogador);
-                Game.getInstance().getLog().registrar(
-                    heroi.getNome() + " atacou " + jogador.getNome() + " - " + resultado);
+
+                // Log detalhado
+                String logMsg = heroi.getNome() + " atacou " + jogador.getNome() + " - " + resultado;
+                if (!jogador.estaVivo()) {
+                    logMsg += " [MORTE]";
+                } else {
+                    logMsg += " [HP restante: " + (int) jogador.getHP() + "]";
+                }
+
+                Game.getInstance().getLog().registrar(logMsg);
                 break;
             }
         }
@@ -39,8 +48,16 @@ public class Turno {
         Heroi alvo = monstro.decidirAlvo(herois);
         if (alvo != null) {
             ResultadoAtaque resultado = monstro.realizarAtaque(alvo);
-            Game.getInstance().getLog().registrar(
-                monstro.getNome() + " atacou " + alvo.getNome() + " - " + resultado);
+
+            // Log detalhado
+            String logMsg = monstro.getNome() + " atacou " + alvo.getNome() + " - " + resultado;
+            if (!alvo.estaVivo()) {
+                logMsg += " [MORTE]";
+            } else {
+                logMsg += " [HP restante: " + (int) alvo.getHP() + "]";
+            }
+
+            Game.getInstance().getLog().registrar(logMsg);
         }
     }
 }
